@@ -1,0 +1,49 @@
+{
+  "api_version": "v1",
+  "description": "3D Printer Configuration Repository API v1",
+  "last_updated": "2025-06-11T21:52:00Z",
+  "endpoints": {
+    "repository_info": "/index.json",
+    "slicers": "/api/v1/slicers.json",
+    "search": "/api/v1/search.json",
+    "browse_slicers": "/slicers/",
+    "browse_printer": "/slicers/{slicer}/printers/",
+    "browse_filaments": "/slicers/{slicer}/filaments/",
+    "browse_processes": "/slicers/{slicer}/processes/"
+  },
+  "url_patterns": {
+    "printer_config": "/slicers/{slicer}/printers/{manufacturer}/{model}.json",
+    "filament_config": "/slicers/{slicer}/filaments/{material}/{name}.json",
+    "process_config": "/slicers/{slicer}/processes/{category}/{name}.json"
+  },
+  "supported_formats": ["json", "toml"],
+  "metadata_schema": {
+    "required_fields": [
+      "name",
+      "version", 
+      "slicer",
+      "type",
+      "created",
+      "updated",
+      "author",
+      "license"
+    ],
+    "optional_fields": [
+      "description",
+      "tags",
+      "compatibility",
+      "manufacturer",
+      "model",
+      "material",
+      "category"
+    ]
+  },
+  "query_parameters": {
+    "format": "Response format (json, raw)",
+    "slicer": "Filter by slicer type",
+    "manufacturer": "Filter by manufacturer",
+    "material": "Filter by material type",
+    "tags": "Filter by tags (comma-separated)",
+    "version": "Minimum version compatibility"
+  }
+}

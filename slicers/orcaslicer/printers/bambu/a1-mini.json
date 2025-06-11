@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "name": "Bambu Lab A1 Mini",
+    "version": "1.2.0",
+    "slicer": "orcaslicer",
+    "slicer_version": "1.8.0+",
+    "type": "printer",
+    "manufacturer": "Bambu Lab",
+    "model": "A1 Mini",
+    "tags": ["bambu", "enclosed", "auto-leveling", "ams-lite"],
+    "created": "2024-01-10T14:30:00Z",
+    "updated": "2025-06-11T21:52:00Z",
+    "author": "community",
+    "license": "MIT",
+    "description": "Official Bambu Lab A1 Mini printer profile with AMS Lite support",
+    "compatibility": {
+      "min_slicer_version": "1.8.0",
+      "tested_versions": ["1.8.0", "1.8.1", "1.9.0", "2.0.0"]
+    },
+    "build_volume": {
+      "x": 180,
+      "y": 180,
+      "z": 180
+    },
+    "nozzle_diameter": 0.4
+  },
+  "config": {
+    "printer_model": "Bambu Lab A1 mini",
+    "printer_variant": "0.4",
+    "default_print_profile": "0.20mm QUALITY @BBL A1M",
+    "default_filament_profile": "Bambu PLA Basic @BBL A1M",
+    "bed_model": "bambu_a1m_bed.stl",
+    "bed_texture": "bambu_a1m_bed.svg",
+    "before_layer_gcode": ";BEFORE_LAYER_CHANGE\nG92 E0\n",
+    "layer_gcode": ";AFTER_LAYER_CHANGE\n;[layer_z]\n",
+    "machine_max_acceleration_e": [5000, 5000],
+    "machine_max_acceleration_extruding": [20000, 20000],
+    "machine_max_acceleration_retracting": [5000, 5000],
+    "machine_max_acceleration_travel": [9000, 9000],
+    "machine_max_acceleration_x": [20000, 20000],
+    "machine_max_acceleration_y": [20000, 20000],
+    "machine_max_acceleration_z": [500, 500],
+    "machine_max_feedrate_e": [30, 30],
+    "machine_max_feedrate_x": [500, 500],
+    "machine_max_feedrate_y": [500, 500],
+    "machine_max_feedrate_z": [20, 20],
+    "machine_max_jerk_e": [2.5, 2.5],
+    "machine_max_jerk_x": [9, 9],
+    "machine_max_jerk_y": [9, 9],
+    "machine_max_jerk_z": [0.4, 0.4],
+    "max_print_height": 180,
+    "printer_notes": "Bambu Lab A1 mini with 0.4mm nozzle",
+    "printable_area": [
+      "0x0",
+      "180x0", 
+      "180x180",
+      "0x180"
+    ],
+    "printable_height": 180,
+    "nozzle_diameter": [0.4],
+    "retract_length": [0.8],
+    "retract_speed": [30],
+    "deretract_speed": [30],
+    "retract_restart_extra": [0],
+    "retract_before_travel": [1],
+    "retract_lift": [0],
+    "retract_lift_above": [0],
+    "retract_lift_below": [0],
+    "retract_layer_change": true,
+    "wipe": true,
+    "retract_before_wipe": "0%"
+  }
+}

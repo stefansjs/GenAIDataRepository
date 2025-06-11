@@ -1,0 +1,27 @@
+{
+  "name": "3d-printer-configs",
+  "version": "1.0.0",
+  "description": "Community 3D printer configuration repository",
+  "api_version": "v1",
+  "last_updated": "2025-06-11T21:52:00Z",
+  "supported_slicers": [
+    "orcaslicer",
+    "prusaslicer", 
+    "cura"
+  ],
+  "statistics": {
+    "total_printers": 12,
+    "total_filaments": 8,
+    "total_processes": 6
+  },
+  "endpoints": {
+    "api": "/api/v1/",
+    "browse": "/slicers/",
+    "search": "/api/v1/search.json"
+  },
+  "repository_url": "https://github.com/user/3d-printer-configs",
+  "license": "MIT",
+  "maintainers": [
+    "community"
+  ]
+}

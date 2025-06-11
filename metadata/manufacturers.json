@@ -1,0 +1,60 @@
+{
+  "manufacturers": [
+    {
+      "id": "bambu",
+      "name": "Bambu Lab",
+      "website": "https://bambulab.com",
+      "country": "China",
+      "founded": 2021,
+      "specialties": ["enclosed printers", "ams systems", "auto-calibration"],
+      "popular_models": ["A1", "A1 Mini", "X1 Carbon", "P1P", "P1S"]
+    },
+    {
+      "id": "prusa",
+      "name": "Prusa Research",
+      "website": "https://prusa3d.com",
+      "country": "Czech Republic", 
+      "founded": 2012,
+      "specialties": ["open source", "reliability", "community"],
+      "popular_models": ["MK3S+", "MK4", "MINI+", "XL"]
+    },
+    {
+      "id": "creality",
+      "name": "Creality 3D",
+      "website": "https://creality.com",
+      "country": "China",
+      "founded": 2014,
+      "specialties": ["affordable", "large build volumes", "beginner-friendly"],
+      "popular_models": ["Ender 3", "Ender 5", "CR-10", "K1"]
+    },
+    {
+      "id": "voron",
+      "name": "Voron Design",
+      "website": "https://vorondesign.com",
+      "country": "International",
+      "founded": 2015,
+      "specialties": ["diy kits", "high speed", "enclosed", "community"],
+      "popular_models": ["2.4", "Trident", "0.1", "Switchwire"]
+    },
+    {
+      "id": "ultimaker",
+      "name": "Ultimaker",
+      "website": "https://ultimaker.com",
+      "country": "Netherlands",
+      "founded": 2011,
+      "specialties": ["professional", "dual extrusion", "materials"],
+      "popular_models": ["S3", "S5", "Method X"]
+    },
+    {
+      "id": "generic",
+      "name": "Generic/Universal",
+      "website": null,
+      "country": null,
+      "founded": null,
+      "specialties": ["universal profiles", "compatibility"],
+      "popular_models": []
+    }
+  ],
+  "last_updated": "2025-06-11T21:52:00Z",
+  "total_manufacturers": 6
+}
