@@ -12,14 +12,35 @@ repository-root/
 │   ├── orcaslicer/                     # OrcaSlicer configurations
 │   │   ├── printers/                   # Printer definitions
 │   │   │   ├── bambu/                  # Manufacturer grouping
-│   │   │   │   ├── a1-mini.json
+│   │   │   │   ├── a1-mini.json        # Main printer configuration
+│   │   │   │   ├── a1-mini/            # Optional assets directory
+│   │   │   │   │   ├── cover.png       # Printer cover image
+│   │   │   │   │   ├── bed.stl         # 3D bed model
+│   │   │   │   │   ├── bed.svg         # Bed texture/outline
+│   │   │   │   │   └── thumbnail.png   # Small preview image
 │   │   │   │   ├── a1.json
+│   │   │   │   ├── a1/                 # Assets for A1
+│   │   │   │   │   ├── cover.png
+│   │   │   │   │   ├── bed.stl
+│   │   │   │   │   └── bed.svg
 │   │   │   │   └── x1-carbon.json
 │   │   │   ├── prusa/
 │   │   │   │   ├── mk3s.json
-│   │   │   │   └── mk4.json
+│   │   │   │   ├── mk3s/               # Assets for MK3S
+│   │   │   │   │   ├── cover.png
+│   │   │   │   │   ├── bed.stl
+│   │   │   │   │   └── bed.svg
+│   │   │   │   ├── mk4.json
+│   │   │   │   └── mk4/
+│   │   │   │       ├── cover.png
+│   │   │   │       ├── bed.stl
+│   │   │   │       └── bed.svg
 │   │   │   └── creality/
 │   │   │       ├── ender3-v2.json
+│   │   │       ├── ender3-v2/
+│   │   │       │   ├── cover.png
+│   │   │       │   ├── bed.stl
+│   │   │       │   └── bed.svg
 │   │   │       └── cr10s.json
 │   │   ├── filaments/                  # Filament/Material profiles
 │   │   │   ├── pla/
@@ -98,6 +119,26 @@ Examples:
 - `vase-mode.json`
 - `miniatures-high-detail.json`
 - `speed-draft.json`
+
+### Printer Asset Files
+Assets are stored in a directory matching the printer configuration filename (without extension).
+
+**Required Asset Naming:**
+- `cover.png` - Main printer image (recommended: 320x240px, PNG format)
+- `bed.stl` - 3D bed model for visualization (STL format)
+- `bed.svg` - Bed texture/outline for slicer UI (SVG format)
+
+**Optional Asset Naming:**
+- `thumbnail.png` - Small preview image (recommended: 64x64px)
+- `logo.png` - Manufacturer logo
+- `manual.pdf` - Printer manual or setup guide
+- `firmware/` - Directory for firmware files
+- `gcode/` - Directory for sample G-code files
+
+**Asset Directory Examples:**
+- `slicers/orcaslicer/printers/bambu/a1-mini/cover.png`
+- `slicers/orcaslicer/printers/prusa/mk3s/bed.stl`
+- `slicers/orcaslicer/printers/creality/ender3-v2/bed.svg`
 
 ## Repository Index File (index.json)
 

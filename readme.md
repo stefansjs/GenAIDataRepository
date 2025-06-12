@@ -36,9 +36,10 @@ repository-root/
 ## Configuration Types
 
 ### Printers
-Printer definitions include machine specifications, build volumes, and hardware-specific settings.
+Printer definitions include machine specifications, build volumes, and hardware-specific settings. Printer configurations can optionally include additional assets like cover images, bed models, and textures.
 
 **Example:** `/slicers/orcaslicer/printers/bambu/a1-mini.json`
+**Assets:** `/slicers/orcaslicer/printers/bambu/a1-mini/cover.png`
 
 ### Filaments
 Material profiles with temperature settings, flow rates, and material-specific parameters.
@@ -62,6 +63,37 @@ Print quality profiles with layer heights, speeds, and advanced slicing settings
 - Printers: `bambu-a1-mini.json`, `prusa-mk3s-plus.json`
 - Filaments: `generic-pla.json`, `bambu-pla-basic.json`
 - Processes: `0.2mm-fine.json`, `vase-mode.json`
+
+### Printer Assets
+Printer configurations can include optional assets stored in a directory matching the configuration filename:
+
+**Asset Types:**
+- `cover.png` - Main printer image (320x240px recommended)
+- `bed.stl` - 3D bed model for visualization
+- `bed.svg` - Bed texture/outline for slicer UI
+- `thumbnail.png` - Small preview image (64x64px)
+- `manual.pdf` - Printer documentation
+- `firmware/` - Firmware files directory
+
+**Asset Directory Structure:**
+```
+slicers/orcaslicer/printers/bambu/
+├── a1-mini.json              # Main configuration
+└── a1-mini/                  # Assets directory
+    ├── cover.png
+    ├── bed.stl
+    ├── bed.svg
+    └── thumbnail.png
+```
+
+Assets are referenced in the configuration metadata:
+```json
+"assets": {
+  "cover_image": "slicers/orcaslicer/printers/bambu/a1-mini/cover.png",
+  "bed_model": "slicers/orcaslicer/printers/bambu/a1-mini/bed.stl",
+  "bed_texture": "slicers/orcaslicer/printers/bambu/a1-mini/bed.svg"
+}
+```
 
 ## Usage
 

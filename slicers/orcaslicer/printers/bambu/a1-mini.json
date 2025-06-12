@@ -22,7 +22,13 @@
       "y": 180,
       "z": 180
     },
-    "nozzle_diameter": 0.4
+    "nozzle_diameter": 0.4,
+    "assets": {
+      "cover_image": "slicers/orcaslicer/printers/bambu/a1-mini/cover.png",
+      "bed_model": "slicers/orcaslicer/printers/bambu/a1-mini/bed.stl",
+      "bed_texture": "slicers/orcaslicer/printers/bambu/a1-mini/bed.svg",
+      "thumbnail": "slicers/orcaslicer/printers/bambu/a1-mini/thumbnail.png"
+    }
   },
   "config": {
     "printer_model": "Bambu Lab A1 mini",
