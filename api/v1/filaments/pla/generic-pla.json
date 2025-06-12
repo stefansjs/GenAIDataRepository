@@ -1,0 +1,54 @@
+{
+  "api_version": "v1",
+  "type": "filament",
+  "metadata": {
+    "name": "Generic PLA",
+    "version": "1.0.0",
+    "slicer": "orcaslicer",
+    "slicer_version": "1.8.0+",
+    "manufacturer": "Generic",
+    "material": "PLA",
+    "tags": ["pla", "generic", "beginner-friendly", "low-temp"],
+    "created": "2024-01-10T14:30:00Z",
+    "updated": "2025-06-11T21:52:00Z",
+    "author": "community",
+    "license": "MIT",
+    "description": "Universal PLA profile compatible with most PLA filaments",
+    "compatibility": {
+      "min_slicer_version": "1.8.0",
+      "tested_versions": ["1.8.0", "1.8.1", "1.9.0", "2.0.0"]
+    },
+    "material_properties": {
+      "density": 1.24,
+      "diameter": 1.75,
+      "glass_transition_temp": 60,
+      "melting_temp": 180
+    }
+  },
+  "config_path": "/configs/orcaslicer/filaments/pla/generic-pla.json",
+  "inheritance": {
+    "inherits": "fdm_filament_pla",
+    "from": "system",
+    "instantiation": "true",
+    "parent_config_path": "/configs/orcaslicer/filaments/base/fdm_filament_pla.json"
+  },
+  "compatible_printers": [
+    "/api/v1/printers/bambu/a1-mini.json",
+    "/api/v1/printers/bambu/a1.json",
+    "/api/v1/printers/bambu/x1-carbon.json",
+    "/api/v1/printers/bambu/p1s.json",
+    "/api/v1/printers/bambu/p1p.json"
+  ],
+  "recommended_processes": [
+    "/api/v1/processes/quality/0.2mm-fine.json",
+    "/api/v1/processes/quality/0.3mm-standard.json",
+    "/api/v1/processes/speed/normal.json"
+  ],
+  "links": {
+    "self": "/api/v1/filaments/pla/generic-pla.json",
+    "config": "/configs/orcaslicer/filaments/pla/generic-pla.json",
+    "material_type": "/api/v1/materials/pla.json",
+    "manufacturer": "/api/v1/manufacturers/generic.json",
+    "slicer": "/api/v1/slicers/orcaslicer.json"
+  }
+}

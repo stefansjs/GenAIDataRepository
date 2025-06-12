@@ -8,7 +8,7 @@ This document defines the directory structure and file naming conventions for ho
 ```
 repository-root/
 ├── index.json                          # Repository metadata and index
-├── slicers/                            # Slicer-specific configurations
+├── configs/                            # Slicer-specific configurations
 │   ├── orcaslicer/                     # OrcaSlicer configurations
 │   │   ├── printers/                   # Printer definitions
 │   │   │   ├── bambu/                  # Manufacturer grouping
@@ -82,7 +82,16 @@ repository-root/
     ├── v1/
     │   ├── index.json                  # API version 1 index
     │   ├── slicers.json                # Available slicers
-    │   └── search.json                 # Search endpoint metadata
+    │   ├── search.json                 # Search endpoint metadata
+    │   ├── printers/                   # API responses for printers
+    │   │   └── bambu/
+    │   │       └── a1-mini.json        # API metadata for A1 Mini
+    │   ├── filaments/                  # API responses for filaments
+    │   │   └── pla/
+    │   │       └── generic-pla.json    # API metadata for Generic PLA
+    │   └── processes/                  # API responses for processes
+    │       └── quality/
+    │           └── 0.2mm-fine.json     # API metadata for 0.2mm Fine
     └── latest -> v1/                   # Symlink to latest API version
 ```
 
@@ -136,9 +145,9 @@ Assets are stored in a directory matching the printer configuration filename (wi
 - `gcode/` - Directory for sample G-code files
 
 **Asset Directory Examples:**
-- `slicers/orcaslicer/printers/bambu/a1-mini/cover.png`
-- `slicers/orcaslicer/printers/prusa/mk3s/bed.stl`
-- `slicers/orcaslicer/printers/creality/ender3-v2/bed.svg`
+- `configs/orcaslicer/printers/bambu/a1-mini/cover.png`
+- `configs/orcaslicer/printers/prusa/mk3s/bed.stl`
+- `configs/orcaslicer/printers/creality/ender3-v2/bed.svg`
 
 ## Repository Index File (index.json)
 
@@ -166,6 +175,43 @@ Assets are stored in a directory matching the printer configuration filename (wi
   }
 }
 ```
+
+## API and Configuration Separation
+
+The repository uses a two-layer architecture that separates API responses from configuration data:
+
+### API Layer (`/api/v1/`)
+- Contains structured metadata and relationships
+- Provides paths to configuration files and assets
+- Includes compatibility information and links
+- Optimized for programmatic access and discovery
+
+### Data Layer (`/configs/`)
+- Contains the actual slicer configuration data
+- Direct access for clients that need raw config files
+- Maintains slicer-specific format and structure
+- Can be accessed independently of the API
+
+### Benefits of Separation
+- **Performance**: API responses are lightweight with just metadata
+- **Flexibility**: Clients can choose API metadata or direct config access
+- **Caching**: API and config files can be cached independently
+- **Maintenance**: Updates to metadata don't require config changes
+- **Compatibility**: Direct config access maintains slicer compatibility
+
+### Example Usage
+
+**Get metadata via API:**
+```
+GET /api/v1/printers/bambu/a1-mini.json
+```
+Returns metadata, asset paths, and links to related configurations.
+
+**Get configuration directly:**
+```
+GET /configs/orcaslicer/printers/bambu/a1-mini.json
+```
+Returns the raw slicer configuration file.
 
 ## Individual Configuration File Structure
 
@@ -223,13 +269,13 @@ Each configuration file should include metadata:
 
 ### GitHub Hosted
 ```
-https://raw.githubusercontent.com/user/3d-configs/main/slicers/orcaslicer/printers/bambu/a1-mini.json
-https://user.github.io/3d-configs/slicers/orcaslicer/filaments/pla/generic-pla.json
+https://raw.githubusercontent.com/user/3d-configs/main/configs/orcaslicer/printers/bambu/a1-mini.json
+https://user.github.io/3d-configs/configs/orcaslicer/filaments/pla/generic-pla.json
 ```
 
 ### Self-Hosted
 ```
-https://configs.example.com/slicers/orcaslicer/printers/bambu/a1-mini.json
+https://configs.example.com/configs/orcaslicer/printers/bambu/a1-mini.json
 https://configs.example.com/api/v1/index.json
 ```
 

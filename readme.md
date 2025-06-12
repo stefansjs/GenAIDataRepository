@@ -9,7 +9,7 @@ This repository follows a hierarchical structure that supports multiple slicers 
 ```
 repository-root/
 ├── index.json                    # Repository metadata and API info
-├── slicers/                      # Slicer-specific configurations
+├── configs/                     # Slicer-specific configurations
 │   ├── orcaslicer/              # OrcaSlicer configurations
 │   │   ├── printers/            # Printer definitions
 │   │   ├── filaments/           # Filament/Material profiles  
@@ -38,18 +38,18 @@ repository-root/
 ### Printers
 Printer definitions include machine specifications, build volumes, and hardware-specific settings. Printer configurations can optionally include additional assets like cover images, bed models, and textures.
 
-**Example:** `/slicers/orcaslicer/printers/bambu/a1-mini.json`
-**Assets:** `/slicers/orcaslicer/printers/bambu/a1-mini/cover.png`
+**Example:** `/configs/orcaslicer/printers/bambu/a1-mini.json`
+**Assets:** `/configs/orcaslicer/printers/bambu/a1-mini/cover.png`
 
 ### Filaments
 Material profiles with temperature settings, flow rates, and material-specific parameters.
 
-**Example:** `/slicers/orcaslicer/filaments/pla/generic-pla.json`
+**Example:** `/configs/orcaslicer/filaments/pla/generic-pla.json`
 
 ### Processes
 Print quality profiles with layer heights, speeds, and advanced slicing settings.
 
-**Example:** `/slicers/orcaslicer/processes/quality/0.2mm-fine.json`
+**Example:** `/configs/orcaslicer/processes/quality/0.2mm-fine.json`
 
 ## File Naming Convention
 
@@ -77,7 +77,7 @@ Printer configurations can include optional assets stored in a directory matchin
 
 **Asset Directory Structure:**
 ```
-slicers/orcaslicer/printers/bambu/
+configs/orcaslicer/printers/bambu/
 ├── a1-mini.json              # Main configuration
 └── a1-mini/                  # Assets directory
     ├── cover.png
@@ -89,9 +89,9 @@ slicers/orcaslicer/printers/bambu/
 Assets are referenced in the configuration metadata:
 ```json
 "assets": {
-  "cover_image": "slicers/orcaslicer/printers/bambu/a1-mini/cover.png",
-  "bed_model": "slicers/orcaslicer/printers/bambu/a1-mini/bed.stl",
-  "bed_texture": "slicers/orcaslicer/printers/bambu/a1-mini/bed.svg"
+  "cover_image": "configs/orcaslicer/printers/bambu/a1-mini/cover.png",
+  "bed_model": "configs/orcaslicer/printers/bambu/a1-mini/bed.stl",
+  "bed_texture": "configs/orcaslicer/printers/bambu/a1-mini/bed.svg"
 }
 ```
 
@@ -99,8 +99,8 @@ Assets are referenced in the configuration metadata:
 
 ### GitHub Hosting
 This repository can be hosted directly on GitHub with automatic access via:
-- Raw file access: `https://raw.githubusercontent.com/user/repo/main/slicers/orcaslicer/printers/bambu/a1-mini.json`
-- GitHub Pages: `https://user.github.io/repo/slicers/orcaslicer/printers/bambu/a1-mini.json`
+- Raw file access: `https://raw.githubusercontent.com/user/repo/main/configs/orcaslicer/printers/bambu/a1-mini.json`
+- GitHub Pages: `https://user.github.io/repo/configs/orcaslicer/printers/bambu/a1-mini.json`
 
 ### Self-Hosting
 Deploy on any web server with directory browsing enabled:
@@ -122,26 +122,39 @@ slicer-config list printers --slicer orcaslicer
 slicer-config get printer bambu/a1-mini --slicer orcaslicer
 ```
 
-## API Endpoints
+## API Architecture
+
+The repository uses a two-layer architecture that separates API responses from configuration data:
+
+### API Layer - Structured Metadata
+- `GET /api/v1/printers/{manufacturer}/{model}.json` - Get printer metadata and links
+- `GET /api/v1/filaments/{material}/{name}.json` - Get filament metadata and compatibility
+- `GET /api/v1/processes/{category}/{name}.json` - Get process metadata and settings
+
+### Data Layer - Raw Configuration Files
+- `GET /configs/{slicer}/printers/{manufacturer}/{model}.json` - Get raw printer config
+- `GET /configs/{slicer}/filaments/{material}/{name}.json` - Get raw filament config
+- `GET /configs/{slicer}/processes/{category}/{name}.json` - Get raw process config
 
 ### Repository Information
 - `GET /index.json` - Repository metadata and statistics
 - `GET /api/v1/index.json` - API documentation and endpoints
 
 ### Browse Configurations
-- `GET /slicers/` - List available slicers
-- `GET /slicers/{slicer}/printers/` - Browse printer configurations
-- `GET /slicers/{slicer}/filaments/` - Browse filament profiles
-- `GET /slicers/{slicer}/processes/` - Browse process profiles
-
-### Direct Access
-- `GET /slicers/{slicer}/printers/{manufacturer}/{model}.json` - Get printer config
-- `GET /slicers/{slicer}/filaments/{material}/{name}.json` - Get filament config
-- `GET /slicers/{slicer}/processes/{category}/{name}.json` - Get process config
+- `GET /configs/` - List available slicers
+- `GET /configs/{slicer}/printers/` - Browse printer configurations
+- `GET /configs/{slicer}/filaments/` - Browse filament profiles
+- `GET /configs/{slicer}/processes/` - Browse process profiles
 
 ### Optional Dependency Resolution
 - `GET /api/v1/dependencies/{slicer}/{type}/{path}` - Get dependency tree for a configuration (optional)
 - `GET /api/v1/resolved/{slicer}/{type}/{path}` - Get fully resolved configuration with inheritance (optional)
+
+### Benefits of Separation
+- **Performance**: API responses are lightweight with structured metadata
+- **Flexibility**: Choose between API metadata or direct config access
+- **Caching**: API and config files can be cached independently
+- **Compatibility**: Direct config access maintains slicer compatibility
 
 ### Query Parameters
 - `format=json|raw` - Response format

@@ -2,23 +2,39 @@
   "api_version": "v1",
   "description": "3D Printer Configuration Repository API v1",
   "last_updated": "2025-06-11T21:52:00Z",
+  "architecture": {
+    "separation_of_concerns": "API responses are separated from configuration data",
+    "api_layer": "API endpoints return metadata, paths, and relationships",
+    "data_layer": "Configuration files contain the actual slicer settings",
+    "benefits": [
+      "Cleaner API responses with structured metadata",
+      "Direct access to configuration files when needed",
+      "Better caching and performance",
+      "Easier maintenance and updates"
+    ]
+  },
   "endpoints": {
     "repository_info": "/index.json",
     "slicers": "/api/v1/slicers.json",
     "search": "/api/v1/search.json",
-    "browse_slicers": "/slicers/",
-    "browse_printer": "/slicers/{slicer}/printers/",
-    "browse_filaments": "/slicers/{slicer}/filaments/",
-    "browse_processes": "/slicers/{slicer}/processes/"
+    "browse_slicers": "/configs/",
+    "browse_printer": "/configs/{slicer}/printers/",
+    "browse_filaments": "/configs/{slicer}/filaments/",
+    "browse_processes": "/configs/{slicer}/processes/"
   },
   "optional_endpoints": {
     "dependencies": "/api/v1/dependencies/{slicer}/{type}/{path}",
     "resolved_config": "/api/v1/resolved/{slicer}/{type}/{path}"
   },
-  "url_patterns": {
-    "printer_config": "/slicers/{slicer}/printers/{manufacturer}/{model}.json",
-    "filament_config": "/slicers/{slicer}/filaments/{material}/{name}.json",
-    "process_config": "/slicers/{slicer}/processes/{category}/{name}.json"
+  "api_patterns": {
+    "printer_api": "/api/v1/printers/{manufacturer}/{model}.json",
+    "filament_api": "/api/v1/filaments/{material}/{name}.json",
+    "process_api": "/api/v1/processes/{category}/{name}.json"
+  },
+  "config_patterns": {
+    "printer_config": "/configs/{slicer}/printers/{manufacturer}/{model}.json",
+    "filament_config": "/configs/{slicer}/filaments/{material}/{name}.json",
+    "process_config": "/configs/{slicer}/processes/{category}/{name}.json"
   },
   "supported_formats": ["json", "toml"],
   "metadata_schema": {

@@ -1,0 +1,51 @@
+{
+  "api_version": "v1",
+  "type": "process",
+  "metadata": {
+    "name": "0.2mm Fine Quality",
+    "version": "1.1.0",
+    "slicer": "orcaslicer",
+    "slicer_version": "1.8.0+",
+    "category": "quality",
+    "layer_height": 0.2,
+    "tags": ["fine", "quality", "detailed", "slow"],
+    "created": "2024-01-10T14:30:00Z",
+    "updated": "2025-06-11T21:52:00Z",
+    "author": "community",
+    "license": "MIT",
+    "description": "High quality 0.2mm layer height profile for detailed prints",
+    "compatibility": {
+      "min_slicer_version": "1.8.0",
+      "tested_versions": ["1.8.0", "1.8.1", "1.9.0", "2.0.0"]
+    },
+    "recommended_for": ["miniatures", "detailed models", "prototypes"],
+    "estimated_time_multiplier": 1.5
+  },
+  "config_path": "/configs/orcaslicer/processes/quality/0.2mm-fine.json",
+  "compatible_printers": [
+    "/api/v1/printers/bambu/a1-mini.json",
+    "/api/v1/printers/bambu/a1.json",
+    "/api/v1/printers/prusa/mk3s.json",
+    "/api/v1/printers/prusa/mk4.json"
+  ],
+  "compatible_filaments": [
+    "/api/v1/filaments/pla/generic-pla.json",
+    "/api/v1/filaments/petg/generic-petg.json",
+    "/api/v1/filaments/abs/generic-abs.json"
+  ],
+  "process_settings": {
+    "layer_height": 0.2,
+    "first_layer_height": 0.2,
+    "perimeters": 3,
+    "infill_density": "15%",
+    "print_speed": 80,
+    "perimeter_speed": 60,
+    "external_perimeter_speed": 30
+  },
+  "links": {
+    "self": "/api/v1/processes/quality/0.2mm-fine.json",
+    "config": "/configs/orcaslicer/processes/quality/0.2mm-fine.json",
+    "category": "/api/v1/process-categories/quality.json",
+    "slicer": "/api/v1/slicers/orcaslicer.json"
+  }
+}

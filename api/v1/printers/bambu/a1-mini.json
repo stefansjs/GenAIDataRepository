@@ -1,0 +1,51 @@
+{
+  "api_version": "v1",
+  "type": "printer",
+  "metadata": {
+    "name": "Bambu Lab A1 Mini",
+    "version": "1.2.0",
+    "slicer": "orcaslicer",
+    "slicer_version": "1.8.0+",
+    "manufacturer": "Bambu Lab",
+    "model": "A1 Mini",
+    "tags": ["bambu", "enclosed", "auto-leveling", "ams-lite"],
+    "created": "2024-01-10T14:30:00Z",
+    "updated": "2025-06-11T21:52:00Z",
+    "author": "community",
+    "license": "MIT",
+    "description": "Official Bambu Lab A1 Mini printer profile with AMS Lite support",
+    "compatibility": {
+      "min_slicer_version": "1.8.0",
+      "tested_versions": ["1.8.0", "1.8.1", "1.9.0", "2.0.0"]
+    },
+    "build_volume": {
+      "x": 180,
+      "y": 180,
+      "z": 180
+    },
+    "nozzle_diameter": 0.4
+  },
+  "config_path": "/configs/orcaslicer/printers/bambu/a1-mini.json",
+  "assets": {
+    "cover_image": "/configs/orcaslicer/printers/bambu/a1-mini/cover.png",
+    "bed_model": "/configs/orcaslicer/printers/bambu/a1-mini/bed.stl",
+    "bed_texture": "/configs/orcaslicer/printers/bambu/a1-mini/bed.svg",
+    "thumbnail": "/configs/orcaslicer/printers/bambu/a1-mini/thumbnail.png"
+  },
+  "related_configs": {
+    "default_filaments": [
+      "/api/v1/filaments/pla/generic-pla.json",
+      "/api/v1/filaments/pla/bambu-pla-basic.json"
+    ],
+    "default_processes": [
+      "/api/v1/processes/quality/0.2mm-fine.json",
+      "/api/v1/processes/quality/0.3mm-standard.json"
+    ]
+  },
+  "links": {
+    "self": "/api/v1/printers/bambu/a1-mini.json",
+    "config": "/configs/orcaslicer/printers/bambu/a1-mini.json",
+    "manufacturer": "/api/v1/manufacturers/bambu.json",
+    "slicer": "/api/v1/slicers/orcaslicer.json"
+  }
+}
