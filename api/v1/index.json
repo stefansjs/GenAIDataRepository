@@ -11,6 +11,10 @@
     "browse_filaments": "/slicers/{slicer}/filaments/",
     "browse_processes": "/slicers/{slicer}/processes/"
   },
+  "optional_endpoints": {
+    "dependencies": "/api/v1/dependencies/{slicer}/{type}/{path}",
+    "resolved_config": "/api/v1/resolved/{slicer}/{type}/{path}"
+  },
   "url_patterns": {
     "printer_config": "/slicers/{slicer}/printers/{manufacturer}/{model}.json",
     "filament_config": "/slicers/{slicer}/filaments/{material}/{name}.json",
@@ -44,6 +48,26 @@
     "manufacturer": "Filter by manufacturer",
     "material": "Filter by material type",
     "tags": "Filter by tags (comma-separated)",
-    "version": "Minimum version compatibility"
+    "version": "Minimum version compatibility",
+    "include_dependencies": "Include dependency tree in response (true/false)",
+    "resolve_inheritance": "Resolve all inherited configurations (true/false)"
+  },
+  "optional_features": {
+    "inheritance_system": {
+      "description": "Optional: Configuration files can inherit from other configurations using the 'inherits' property",
+      "status": "optional",
+      "inheritance_chain": "Configurations can form inheritance chains (A inherits from B, B inherits from C, etc.)",
+      "resolution_order": "Child configurations override parent configurations",
+      "dependency_types": {
+        "system": "Built-in base configurations provided by the slicer",
+        "vendor": "Manufacturer-specific base configurations",
+        "user": "User-created base configurations"
+      },
+      "supported_properties": {
+        "inherits": "Optional: Name of the parent configuration to inherit from",
+        "from": "Optional: Source type of the parent configuration (system, vendor, user)",
+        "instantiation": "Optional: Whether this configuration can be instantiated directly (true/false)"
+      }
+    }
   }
 }

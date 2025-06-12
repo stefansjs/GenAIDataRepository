@@ -1,0 +1,155 @@
+{
+  "api_version": "v1",
+  "description": "Configuration Dependency Resolution API",
+  "last_updated": "2025-06-11T21:52:00Z",
+  "endpoints": {
+    "get_dependencies": {
+      "path": "/api/v1/dependencies/{slicer}/{type}/{path}",
+      "method": "GET",
+      "description": "Get the complete dependency tree for a configuration file",
+      "parameters": {
+        "slicer": "Slicer type (e.g., orcaslicer)",
+        "type": "Configuration type (printers, filaments, processes)",
+        "path": "Path to the configuration file (e.g., pla/generic-pla.json)"
+      },
+      "query_parameters": {
+        "format": "Response format (json, tree)",
+        "depth": "Maximum dependency depth to resolve (default: unlimited)",
+        "include_metadata": "Include metadata for each dependency (true/false)"
+      },
+      "response_format": {
+        "target": "The requested configuration file",
+        "dependencies": "Array of dependency configurations in resolution order",
+        "dependency_tree": "Hierarchical representation of dependencies",
+        "resolution_order": "Order in which configurations should be merged",
+        "circular_dependencies": "Array of any circular dependencies detected"
+      }
+    },
+    "get_resolved_config": {
+      "path": "/api/v1/resolved/{slicer}/{type}/{path}",
+      "method": "GET", 
+      "description": "Get a fully resolved configuration with all inheritance applied",
+      "parameters": {
+        "slicer": "Slicer type (e.g., orcaslicer)",
+        "type": "Configuration type (printers, filaments, processes)",
+        "path": "Path to the configuration file (e.g., pla/generic-pla.json)"
+      },
+      "query_parameters": {
+        "format": "Response format (json, raw)",
+        "include_source_map": "Include source information for each property (true/false)",
+        "validate": "Validate the resolved configuration (true/false)"
+      },
+      "response_format": {
+        "resolved_config": "The fully merged configuration",
+        "source_map": "Map of which parent provided each property",
+        "inheritance_chain": "List of configurations in the inheritance chain",
+        "validation_errors": "Any validation errors in the resolved config"
+      }
+    }
+  },
+  "dependency_resolution": {
+    "algorithm": "depth_first_search",
+    "merge_strategy": "child_overrides_parent",
+    "circular_dependency_handling": "error",
+    "max_depth": 10,
+    "supported_inheritance_types": {
+      "system": {
+        "description": "Built-in base configurations",
+        "search_paths": [
+          "/slicers/{slicer}/base/",
+          "/slicers/{slicer}/system/"
+        ]
+      },
+      "vendor": {
+        "description": "Manufacturer-specific configurations",
+        "search_paths": [
+          "/slicers/{slicer}/{type}/{manufacturer}/base/",
+          "/slicers/{slicer}/{type}/{manufacturer}/"
+        ]
+      },
+      "user": {
+        "description": "User-created configurations",
+        "search_paths": [
+          "/slicers/{slicer}/{type}/user/",
+          "/slicers/{slicer}/user/{type}/"
+        ]
+      }
+    }
+  },
+  "examples": {
+    "get_dependencies": {
+      "request": "/api/v1/dependencies/orcaslicer/filaments/pla/generic-pla.json",
+      "response": {
+        "target": {
+          "name": "Generic PLA",
+          "path": "/slicers/orcaslicer/filaments/pla/generic-pla.json",
+          "inherits": "fdm_filament_pla",
+          "from": "system"
+        },
+        "dependencies": [
+          {
+            "name": "fdm_filament_pla",
+            "path": "/slicers/orcaslicer/filaments/base/fdm_filament_pla.json",
+            "inherits": "fdm_filament_common",
+            "from": "system"
+          },
+          {
+            "name": "fdm_filament_common",
+            "path": "/slicers/orcaslicer/filaments/base/fdm_filament_common.json",
+            "inherits": null,
+            "from": "system"
+          }
+        ],
+        "dependency_tree": {
+          "name": "Generic PLA",
+          "children": [
+            {
+              "name": "fdm_filament_pla",
+              "children": [
+                {
+                  "name": "fdm_filament_common",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        "resolution_order": [
+          "fdm_filament_common",
+          "fdm_filament_pla", 
+          "Generic PLA"
+        ],
+        "circular_dependencies": []
+      }
+    },
+    "get_resolved_config": {
+      "request": "/api/v1/resolved/orcaslicer/filaments/pla/generic-pla.json?include_source_map=true",
+      "response": {
+        "resolved_config": {
+          "type": "filament",
+          "name": "Generic PLA",
+          "filament_type": ["PLA"],
+          "temperature": [210],
+          "bed_temperature": [60],
+          "filament_density": [1.24],
+          "filament_colour": "#FF8000"
+        },
+        "source_map": {
+          "type": "fdm_filament_common",
+          "name": "Generic PLA",
+          "filament_type": "fdm_filament_pla",
+          "temperature": "fdm_filament_pla",
+          "bed_temperature": "fdm_filament_pla",
+          "filament_density": "fdm_filament_common",
+          "filament_colour": "Generic PLA"
+        },
+        "inheritance_chain": [
+          "fdm_filament_common",
+          "fdm_filament_pla",
+          "Generic PLA"
+        ],
+        "validation_errors": []
+      }
+    }
+  }
+}

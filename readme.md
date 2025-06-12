@@ -139,6 +139,20 @@ slicer-config get printer bambu/a1-mini --slicer orcaslicer
 - `GET /slicers/{slicer}/filaments/{material}/{name}.json` - Get filament config
 - `GET /slicers/{slicer}/processes/{category}/{name}.json` - Get process config
 
+### Optional Dependency Resolution
+- `GET /api/v1/dependencies/{slicer}/{type}/{path}` - Get dependency tree for a configuration (optional)
+- `GET /api/v1/resolved/{slicer}/{type}/{path}` - Get fully resolved configuration with inheritance (optional)
+
+### Query Parameters
+- `format=json|raw` - Response format
+- `include_dependencies=true` - Include dependency tree in response
+- `resolve_inheritance=true` - Return fully resolved configuration
+- `include_source_map=true` - Show which parent provided each property
+- `slicer=orcaslicer` - Filter by slicer type
+- `manufacturer=bambu` - Filter by manufacturer
+- `material=pla` - Filter by material type
+- `tags=enclosed,auto-leveling` - Filter by tags
+
 ## Configuration File Format
 
 Each configuration file includes standardized metadata:
@@ -167,6 +181,34 @@ Each configuration file includes standardized metadata:
   }
 }
 ```
+
+## Optional Features
+
+### Configuration Inheritance (Optional)
+Repositories can optionally implement a dependency system where configurations inherit from parent configurations:
+
+```json
+{
+  "config": {
+    "name": "Generic PLA",
+    "inherits": "fdm_filament_pla",
+    "from": "system",
+    "instantiation": "true"
+  }
+}
+```
+
+**Benefits of inheritance:**
+- Reduces configuration duplication
+- Easier maintenance of related configurations
+- Hierarchical organization of settings
+
+**Standalone configurations:**
+- No dependencies required
+- Self-contained configuration files
+- Simpler implementation for basic repositories
+
+See [Dependency System Documentation](docs/dependency-system.md) for full details.
 
 ## Contributing
 
