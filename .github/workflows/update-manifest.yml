@@ -1,0 +1,39 @@
+name: Update and Sign Manifest
+
+on:
+  push:
+    branches:
+      - main # Or your default branch, e.g., master
+
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install python-gnupg semver
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Run manifest generation script
+        run: |
+          python scripts/manage_repo.py repo --gpg-key-id ${{ secrets.GPG_SIGNING_KEY }} --non-interactive
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add repo/manifest.json repo/manifest.json.sig
+          # Commit and push only if there are changes, and skip CI to prevent loops.
+          git diff-index --quiet HEAD || (git commit -m "chore: Update manifest and signature [skip ci]" && git push)

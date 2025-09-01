@@ -8,30 +8,28 @@ This repository follows a hierarchical structure that supports multiple slicers 
 
 ```
 repository-root/
-├── index.json                    # Repository metadata and API info
-├── configs/                     # Slicer-specific configurations
-│   ├── orcaslicer/              # OrcaSlicer configurations
-│   │   ├── printers/            # Printer definitions
-│   │   ├── filaments/           # Filament/Material profiles  
-│   │   └── processes/           # Print/Process profiles
-│   ├── prusaslicer/             # PrusaSlicer configurations
-│   └── cura/                    # Ultimaker Cura configurations
+├── api/                        # API endpoint files
+│   └── v1/                     # API version 1
+│       ├── index.json          # API documentation
+│       ├── slicers.json        # Available slicers
+│       └── search.json         # Search capabilities
 ├── metadata/                    # Additional metadata files
 │   ├── manufacturers.json      # Printer manufacturer info
 │   ├── material-types.json     # Material type definitions
 │   └── tags.json              # Common tags for categorization
-└── api/                        # API endpoint files
-    └── v1/                     # API version 1
-        ├── index.json          # API documentation
-        ├── slicers.json        # Available slicers
-        └── search.json         # Search capabilities
+├── orcaslicer/              # OrcaSlicer configurations
+│   ├── printers/            # Printer definitions
+│   ├── filaments/           # Filament/Material profiles  
+│   └── processes/           # Print/Process profiles
+├── prusaslicer/             # PrusaSlicer configurations
+├── cura/                    # Ultimaker Cura configurations
+└── <additional slicers>     # any other slicer. Slicer cannot be named api or metadata
 ```
 
 ## Supported Slicers
 
-- **OrcaSlicer** - Advanced slicer with Bambu Lab integration
-- **PrusaSlicer** - Popular open-source slicer from Prusa Research  
-- **Cura** - Ultimaker's widely-used slicer
+Any slicer can be supported. It is up to both the repository host and the slicer client to provide data that is relevant
+and to fetch the correct data.
 
 ## Configuration Types
 
