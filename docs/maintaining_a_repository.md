@@ -14,12 +14,44 @@ The goal is to make maintenance as simple and error-proof as possible.
 
 Before you begin, you will need:
 
-1.  **A GPG Keypair**: You need a GPG key to sign your manifest, which proves your identity. If you don't have one, you can generate one easily.
+1.  **A GPG Keypair**: You need a GPG key to sign your manifest, which proves your identity.
 2.  **Python 3**: The helper script is written in Python.
 3.  **Required Python Libraries**:
     ```bash
     pip install python-gnupg semver
     ```
+
+### 2.1. Generating Your First GPG Key
+
+If you don't have a GPG key, you can create one using the `gpg` command-line tool, which is available on most systems.
+
+1.  **Run the key generation command:**
+    ```bash
+    gpg --full-generate-key
+    ```
+
+2.  **Follow the prompts:**
+    *   When asked for the key type, the default (`RSA and RSA`) is a good choice.
+    *   For the keysize, `4096` bits is recommended for strong security.
+    *   Set an expiration date or choose `0` for a key that never expires.
+    *   Enter your real name and email address. This information will be public.
+    *   You will be prompted to enter a secure passphrase to protect your key.
+
+3.  **Find your Key ID:**
+    Once the key is generated, you need to find its ID to use it with the management script.
+    ```bash
+    gpg --list-secret-keys --keyid-format=long
+    ```
+    The output will look something like this:
+    ```
+    /Users/yourname/.gnupg/pubring.kbx
+    ------------------------------------
+    sec   rsa4096/A1B2C3D4E5F6G7H8 2024-05-23 [SC]
+          11223344556677889900AABBCCDDEEFF11223344
+    uid                 [ultimate] Your Name <your.email@example.com>
+    ssb   rsa4096/H8G7F6E5D4C3B2A1 2024-05-23 [E]
+    ```
+    The long string of characters after the `/` on the `sec` line is your **Key ID**. In this example, it is `A1B2C3D4E5F6G7H8`. This is the value you will pass to the `--gpg-key-id` argument.
 
 ## 3. The Maintainer Workflow
 
