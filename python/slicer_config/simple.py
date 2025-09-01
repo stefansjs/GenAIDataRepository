@@ -219,16 +219,31 @@ class RepositoryManager:
             print(f"--- Updating {url} ---")
             client.update()
 
-    def find_profile(self, profile_name):
-        """Finds a profile across all repos, handling namespacing."""
+    def list_all_profiles(self, slicer=None):
+        """Lists all profiles from all repositories, optionally filtered by slicer."""
+        all_profiles = []
+        for client in self.clients.values():
+            if not client.manifest:
+                client.update()
+            if client.manifest:
+                namespace = client.manifest.get('namespace')
+                for profile in client.list_profiles():
+                    if slicer and profile.get('slicer') != slicer:
+                        continue
+                    all_profiles.append((namespace, profile))
+        return all_profiles
+
+    def find_profile(self, profile_name, slicer):
+        """Finds a profile across all repos, handling namespacing and slicer type."""
         # If a namespace is provided, search is targeted
         if '/' in profile_name:
             namespace, name = profile_name.split('/', 1)
             for client in self.clients.values():
                 if client.manifest and client.manifest.get('namespace') == namespace.strip():
                     profile = client.find_profile_by_name(name.strip())
-                    if profile:
-                        return profile # Found a unique, specific match
+                    # Also check slicer type
+                    if profile and profile.get('slicer') == slicer:
+                        return profile  # Found a unique, specific match
             return None # Specific profile not found
 
         # If no namespace, search all and report conflicts
@@ -239,7 +254,8 @@ class RepositoryManager:
             if client.manifest:
                 profile = client.find_profile_by_name(profile_name)
                 if profile:
-                    found_profiles.append((client.manifest.get('namespace'), profile))
+                    if profile.get('slicer') == slicer:
+                        found_profiles.append((client.manifest.get('namespace'), profile))
 
         if len(found_profiles) == 0:
             logger.error("Profile '%s' not found in any repository.", profile_name)
@@ -267,8 +283,18 @@ def main():
         manager.list_repos()
     elif args.command == 'update':
         manager.update_all()
+    elif args.command == 'list':
+        profiles = manager.list_all_profiles(slicer=args.slicer)
+        if not profiles:
+            print("No profiles found for the specified criteria.")
+            return
+
+        print("Available profiles:")
+        for namespace, profile in profiles:
+            print(f"  - {namespace}/{profile['name']} (v{profile['version']}) [slicer: {profile.get('slicer')}]")
+
     elif args.command == 'install':
-        profile_to_install = manager.find_profile(args.profile_name)
+        profile_to_install = manager.find_profile(args.profile_name, slicer=args.slicer)
         if not profile_to_install:
             return 1
 
@@ -307,10 +333,16 @@ def _create_arg_parser():
     subparsers = parser.add_subparsers(dest='command', required=True)
     repo_add_parser = subparsers.add_parser('repo-add', help="Add a new profile repository.")
     repo_add_parser.add_argument('url', help="URL of the repository to add.")
+
     subparsers.add_parser('repo-list', help="List all configured repositories.")
     subparsers.add_parser('update', help="Fetch latest profiles from all repositories.")
+
+    list_parser = subparsers.add_parser('list', help="List available profiles.")
+    list_parser.add_argument('--slicer', help="Filter profiles for a specific slicer (e.g., 'cura', 'prusaslicer').")
+
     install_parser = subparsers.add_parser('install', help="Install a profile.")
     install_parser.add_argument('profile_name', help="Name of the profile to install (e.g., 'Prusa MK4' or 'voron_official/V0.2 Fast ABS').")
+    install_parser.add_argument('--slicer', required=True, help="Specify the target slicer for the profile (e.g., 'cura', 'prusaslicer').")
 
     return parser
 

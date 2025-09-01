@@ -15,7 +15,10 @@ This document proposes a **decentralized, secure, and simple specification** for
 
 The proposed model is inspired by the simplicity of Homebrew's "taps" and the security of Linux package managers like APT. It avoids the need for complex server-side applications, relying instead on a set of static files served over standard HTTPS.
 
-A "profile repository" is simply a Git repository with a defined structure, which can be hosted anywhere (GitHub, GitLab, personal server).
+A "profile repository" is a collection of static files served from a base URL over HTTPS. The client only needs to be an HTTP client.
+
+While using a **Git repository** (e.g., on GitHub) is the simplest way for maintainers to manage and host these files,
+it is **not a technical requirement for the protocol**. Any standard web server is sufficient.
 
 ### 2.1. Repository Structure
 
